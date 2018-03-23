@@ -1,9 +1,6 @@
 G:\git\C#\NeuroxPC\NeuroxPC\bin\Debug\NeuroxPC.exe.config
 G:\git\C#\NeuroxPC\NeuroxPC\bin\Debug\NeuroxPC.exe
 G:\git\C#\NeuroxPC\NeuroxPC\bin\Debug\NeuroxPC.pdb
-G:\git\C#\NeuroxPC\NeuroxPC\bin\Debug\RAMLoader.dll
-G:\git\C#\NeuroxPC\NeuroxPC\bin\Debug\RAMLoader.pdb
-G:\git\C#\NeuroxPC\NeuroxPC\bin\Debug\RAMLoader.dll.config
 G:\git\C#\NeuroxPC\NeuroxPC\obj\Debug\NeuroxPC.csprojResolveAssemblyReference.cache
 G:\git\C#\NeuroxPC\NeuroxPC\obj\Debug\NeuroxPC.Properties.Resources.resources
 G:\git\C#\NeuroxPC\NeuroxPC\obj\Debug\NeuroxPC.csproj.GenerateResource.Cache
@@ -11,4 +8,3 @@ G:\git\C#\NeuroxPC\NeuroxPC\obj\Debug\NeuroxPC.csproj.CoreCompileInputs.cache
 G:\git\C#\NeuroxPC\NeuroxPC\obj\Debug\NeuroxPC.exe
 G:\git\C#\NeuroxPC\NeuroxPC\obj\Debug\NeuroxPC.pdb
 G:\git\C#\NeuroxPC\NeuroxPC\obj\Debug\NeuroxPC.Window.resources
-G:\git\C#\NeuroxPC\NeuroxPC\obj\Debug\NeuroxPC.csproj.CopyComplete

@@ -99,6 +99,7 @@ namespace NeuroxPC {
 
         private void lPage(object sender, EventArgs e) {
             if (pageNumber.Enabled) {
+                page =  (uint) pageNumber.SelectedValue;
                 data.Enabled = true;
                 data.ResetText();
                 data.Text = indexedData.getPage((uint)pageNumber.SelectedValue);
