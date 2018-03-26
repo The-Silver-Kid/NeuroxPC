@@ -33,6 +33,17 @@ namespace NeuroxPC {
         }
 
         private void createNewIndexConfirm(object sender, CancelEventArgs e) {
+            loadPage.Enabled = false;
+            newPage.Enabled = false;
+            delPage.Enabled = false;
+            pageNumber.Enabled = false;
+            data.Enabled = false;
+            data.Clear();
+            savePage.Enabled = false;
+            debug.Text = string.Empty;
+            writeChanges.Enabled = false;
+            if (!(file == null))
+                file.Close();
             file = saveBox.OpenFile();
             debug.Text = "Creating...";
             string pass = Prompt.getPass("Enter a password to protect this sheet", "Password");
@@ -57,6 +68,17 @@ namespace NeuroxPC {
         }
 
         private void loadConfirm(object sender, CancelEventArgs e) {
+            loadPage.Enabled = false;
+            newPage.Enabled = false;
+            delPage.Enabled = false;
+            pageNumber.Enabled = false;
+            data.Enabled = false;
+            data.Clear();
+            debug.Text = string.Empty;
+            savePage.Enabled = false;
+            writeChanges.Enabled = false;
+            if (!(file == null))
+                file.Close();
             file = new FileStream(openBox.FileName, FileMode.Open, FileAccess.ReadWrite);
             debug.Text = "Loading...";
             string pass = Prompt.getPass("Enter the password", "Password");
