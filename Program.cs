@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Windows.Forms;
 
 namespace NeuroxPC {
@@ -16,7 +17,6 @@ namespace NeuroxPC {
             Window w = new Window();
             
             Application.Run(w);
-            
         }
     }
 }

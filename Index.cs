@@ -33,6 +33,7 @@ namespace NeuroxPC {
         }
 
         public Index(byte[] data, byte magic, string key) {
+            magicNumber = magic;
             pass = Encoding.Unicode.GetBytes(key);
             for (int i = 0; i < pass.Length; i++)
                 pass[i] = (byte)(pass[i] ^ magicNumber);
