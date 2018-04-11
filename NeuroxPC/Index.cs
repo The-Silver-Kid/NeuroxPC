@@ -1,142 +1,41 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Security.Cryptography;
+using System.Drawing;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace NeuroxPC {
-    class Index {
+    public abstract class Index {
 
-        private const string KEYWORD_V1 = "There_15-0NLY=on3+K1n6. &nd*T7at^1s\\Me!~J@cK ATla$";
-
-        Dictionary<uint, string> pages = new Dictionary<uint, string>();
-        byte magicNumber = 0x0;
-        byte[] hash, pass;
+        protected Dictionary<uint, byte[]> pages = new Dictionary<uint, byte[]>();
+        protected Dictionary<uint, byte> pageType = new Dictionary<uint, byte>();
+        public const byte TEXT = 0x0, IMAGE = 0x1;
         public bool checkout = false;
+        internal byte magicNumber;
+        internal byte[] hash, pass;
+        internal static bool error = false;
 
-        public Index(byte magic, string key) {
-            magicNumber = magic;
-            pass = Encoding.Unicode.GetBytes(key);
-            for (int i = 0; i < pass.Length; i++)
-                pass[i] = (byte)(pass[i] ^ magicNumber);
-            if (key.Length > 8)
-                key = key.Substring(0, 8);
-            if (key.Length < 8)
-                do {
-                    key = key + "^";
-                } while (key.Length < 8);
-            hash = SHA512.Create().ComputeHash(Encoding.Unicode.GetBytes(key));
-            for (int i = 0; i < hash.Length; i++)
-                hash[i] = (byte)(hash[i] ^ magicNumber);
-            pages.Clear();
-            checkout = true;
-        }
+        public Index(byte magic, string key) { }
+        public Index(byte[] data, byte magic, string key) { }
 
-        public Index(byte[] data, byte magic, string key) {
-            magicNumber = magic;
-            pass = Encoding.Unicode.GetBytes(key);
-            for (int i = 0; i < pass.Length; i++)
-                pass[i] = (byte)(pass[i] ^ magicNumber);
-            if (key.Length > 8)
-                key = key.Substring(0, 8);
-            if (key.Length < 8)
-                do {
-                    key = key + "^";
-                } while (key.Length < 8);
-            hash = SHA512.Create().ComputeHash(Encoding.Unicode.GetBytes(key));
-            for (int i = 0; i < hash.Length; i++)
-                hash[i] = (byte)(hash[i] ^ magic);
-            byte[] Q = Encoding.Unicode.GetBytes(KEYWORD_V1);
-            byte Discord = 0;
-            for (int i = 0; i < Q.Length; i++) {
-                Q[i] = (byte)(Q[i] ^ hash[Discord]);
-                Discord++;
-                if (Discord == hash.Length)
-                    Discord = 0;
-            }
-            pages.Clear();
-            checkout = true;
-            for (int i = 0; i < Q.Length; i++)
-                if (Q[i] != data[i])
-                    checkout = false;
+        public abstract byte[] encode();
 
-            byte[] pagesD = new byte[data.Length - Q.Length];
-            for (int i = 0; i < pagesD.Length; i++)
-                pagesD[i] = data[i + Q.Length];
-            Array.Reverse(pagesD);
-
-            int Zelgius = 0;
-            while (Zelgius < pagesD.Length) {
-                byte[] Eliwood = new byte[BitConverter.ToUInt16(pagesD, Zelgius)];
-                Zelgius += 2;
-                uint Lilina = BitConverter.ToUInt16(pagesD, Zelgius);
-                Zelgius += 2;
-
-                int hN = 0;
-                for (int i = 0; i < Eliwood.Length; i++) {
-                    Eliwood[i] = pagesD[Zelgius];
-                    Eliwood[i] = (byte)(Eliwood[i] ^ pass[hN]);
-                    hN++;
-                    if (hN == pass.Length)
-                        hN = 0;
-                    Zelgius++;
-                }
-
-                string Roy = Encoding.Unicode.GetString(Eliwood);
-                pages.Add(Lilina, Roy);
-            }
-        }
-
-        public byte[] encode() {
-            List<byte> Corrin = new List<byte>();
-            uint[] Niles = pages.Keys.ToArray();
-            string[] Beruka = pages.Values.ToArray();
-            for (int i = 0; i < pages.Count; i++) {
-                byte[] Arthur = Encoding.Unicode.GetBytes(Beruka[i]);
-                byte[] Percy = new byte[Arthur.Length + 4];
-                uint Nina = (uint) Arthur.Length;
-                Percy[0] = BitConverter.GetBytes(Nina)[0];
-                Percy[1] = BitConverter.GetBytes(Nina)[1];
-                Percy[2] = BitConverter.GetBytes(Niles[i])[0];
-                Percy[3] = BitConverter.GetBytes(Niles[i])[1];
-                int hN = 0;
-                for (int e = 0; e < Arthur.Length; e++) {
-                    Arthur[e] = (byte)(Arthur[e] ^ pass[hN]);
-                    hN++;
-                    if (hN == pass.Length)
-                        hN = 0;
-                    Percy[e + 4] = Arthur[e];
-                }
-                Corrin.AddRange(Percy);
-            }
-            Corrin.Reverse();
-            
-            byte[] Felicia = Corrin.ToArray();
-            byte[] Thoron = Encoding.Unicode.GetBytes(KEYWORD_V1);
-            byte[] Kana = new byte[Corrin.Count + Thoron.Length];
-            byte Arc = 0;
-            for (int i = 0; i < Thoron.Length; i++) {
-                Kana[i] = (byte)(Thoron[i] ^ hash[Arc]);
-                Arc++;
-                if (Arc == hash.Length)
-                    Arc = 0;
-            }
-            for (int i = 0; i < Felicia.Length; i++)
-                Kana[i + Thoron.Length] = Felicia[i];
-            return Kana;
-        }
-
-        public void addPage(uint id, string data) {
+        public void addPage(uint id, byte[] data, byte type) {
             pages.Add(id, data);
+            pageType.Add(id, type);
         }
 
-        public void replacePage(uint id, string data) {
+        public void replacePage(uint id, byte[] data, byte type) {
             pages[id] = data;
+            pageType[id] = type;
         }
 
-        public string getPage(uint id) {
-            return pages[id];
+        public string getPageAsText(uint id) {
+            return Encoding.Unicode.GetString(pages[id]);
         }
+
+        public abstract Bitmap getPageAsImage(uint id);
 
         public uint[] getAllKeys() {
             return pages.Keys.ToArray();
@@ -154,5 +53,35 @@ namespace NeuroxPC {
         public void deletePage(uint id) {
             pages.Remove(id);
         }
+
+        internal static Index iDindex(byte[] data, byte magic, string key) {
+            Console.WriteLine("Creating Index with type : 0x{0:X}", data[(data.Length) - 1]);
+            byte[] datas = new byte[(data.Length) - 1];
+            for (int i = 0; i < data.Length; i++)
+                if (i < datas.Length)
+                    datas[i] = data[i];
+            switch (data[(data.Length) - 1]) {
+                case 0x1:
+                    try {
+                        return new IndexV1(datas, magic, key);
+                    } catch (Exception e) {
+                        Console.WriteLine(e.StackTrace);
+                        try {
+                            return new IndexV0(data, magic, key);
+                        } catch (Exception ee) {
+                            Console.WriteLine(ee.StackTrace);
+                            error = true;
+                            return new IndexV1(magic, key);
+                        }
+                    }
+                case 0x0:
+                    return new IndexV0(datas, magic, key);
+                default:
+                    Console.WriteLine("Unknown Format! Attempting Creation of Version 0 index...");
+                    return new IndexV0(data, magic, key);
+            }
+        }
+
+        internal abstract byte getPageType(uint page);
     }
 }

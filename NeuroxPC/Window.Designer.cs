@@ -37,6 +37,11 @@
             this.writeChanges = new System.Windows.Forms.Button();
             this.delPage = new System.Windows.Forms.Button();
             this.openBox = new System.Windows.Forms.OpenFileDialog();
+            this.picBox = new System.Windows.Forms.PictureBox();
+            this.addImage = new System.Windows.Forms.Button();
+            this.openIMage = new System.Windows.Forms.OpenFileDialog();
+            this.saveImg = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.picBox)).BeginInit();
             this.SuspendLayout();
             // 
             // data
@@ -164,11 +169,52 @@
             this.openBox.Filter = "Neurox Data Files|*.NXD|All Files|*.*";
             this.openBox.FileOk += new System.ComponentModel.CancelEventHandler(this.loadConfirm);
             // 
+            // picBox
+            // 
+            this.picBox.ErrorImage = null;
+            this.picBox.InitialImage = null;
+            this.picBox.Location = new System.Drawing.Point(12, 120);
+            this.picBox.Name = "picBox";
+            this.picBox.Size = new System.Drawing.Size(960, 529);
+            this.picBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picBox.TabIndex = 11;
+            this.picBox.TabStop = false;
+            this.picBox.Visible = false;
+            // 
+            // addImage
+            // 
+            this.addImage.Enabled = false;
+            this.addImage.Location = new System.Drawing.Point(255, 12);
+            this.addImage.Name = "addImage";
+            this.addImage.Size = new System.Drawing.Size(75, 30);
+            this.addImage.TabIndex = 12;
+            this.addImage.Text = "Add Image";
+            this.addImage.UseVisualStyleBackColor = true;
+            this.addImage.Click += new System.EventHandler(this.addImageStart);
+            // 
+            // openIMage
+            // 
+            this.openIMage.FileOk += new System.ComponentModel.CancelEventHandler(this.addImageConfirm);
+            // 
+            // saveImg
+            // 
+            this.saveImg.Enabled = false;
+            this.saveImg.Location = new System.Drawing.Point(336, 12);
+            this.saveImg.Name = "saveImg";
+            this.saveImg.Size = new System.Drawing.Size(75, 30);
+            this.saveImg.TabIndex = 13;
+            this.saveImg.Text = "Save Image";
+            this.saveImg.UseVisualStyleBackColor = true;
+            this.saveImg.Click += new System.EventHandler(this.sImage);
+            // 
             // Window
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(984, 661);
+            this.Controls.Add(this.saveImg);
+            this.Controls.Add(this.addImage);
+            this.Controls.Add(this.picBox);
             this.Controls.Add(this.delPage);
             this.Controls.Add(this.writeChanges);
             this.Controls.Add(this.savePage);
@@ -184,9 +230,10 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "Window";
-            this.Text = "NeuroxPC";
+            this.Text = "NeuroxPC 1.1";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.closeForm);
             this.Load += new System.EventHandler(this.form1_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.picBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -202,11 +249,15 @@
         private System.Windows.Forms.SaveFileDialog saveBox;
         private System.Windows.Forms.ComboBox pageNumber;
         private System.Windows.Forms.Label pageCount;
-        private System.Windows.Forms.Label debug;
         private System.Windows.Forms.Button savePage;
         private System.Windows.Forms.Button writeChanges;
         private System.Windows.Forms.Button delPage;
         private System.Windows.Forms.OpenFileDialog openBox;
+        private System.Windows.Forms.PictureBox picBox;
+        internal System.Windows.Forms.Label debug;
+        public System.Windows.Forms.Button addImage;
+        internal System.Windows.Forms.OpenFileDialog openIMage;
+        private System.Windows.Forms.Button saveImg;
     }
 }
 
